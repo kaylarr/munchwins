@@ -27,11 +27,35 @@ footer {
   height: 25px;
   background: #ccc;
   text-align: left;
-  padding-left: 10px;
+  padding: 0 10px;
+}
+
+/* General */
+
+.float-right {
+  float: right;
+}
+
+.inline-block {
+  display: inline-block;
 }
 
 /* Header */
 
 /* Main */
+
+/* Character partial */
+
+.character {
+  border: 1px solid #ddd;
+  width: 150px;
+  height: 300px;
+}
+
+.character img {
+  border: 1px solid #aaa;
+  width: 50px;
+  height: 50px;
+}
 
 /* Footer */
