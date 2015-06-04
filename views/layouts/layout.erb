@@ -2,11 +2,14 @@
 <html>
   <head>
     <title>munchwins</title>
+    <link rel="stylesheet" href="/css/normalize.css" />
     <link rel="stylesheet" href="/css/app.css" />
   </head>
   <body>
     <%= erb :'partials/header' %>
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
     <%= erb :'partials/footer' %>
   </body>
 </html>

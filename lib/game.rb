@@ -3,7 +3,7 @@ class Game
     @players = []
   end
 
-  def add_player(name, gender)
+  def add_player(name, gender='male')
     @players << Character.new(name, gender)
   end
 end

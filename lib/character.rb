@@ -14,4 +14,16 @@ class Character
   def level_down
     @level -= 1 unless level == 1
   end
+
+  def sex_change
+    if @gender == 'male'
+      @gender == 'female'
+    else
+      @gender == 'male'
+    end
+  end
+
+  def roll
+    rand(6) + 1
+  end
 end
