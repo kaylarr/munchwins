@@ -12,6 +12,14 @@ get '/' do
   erb :index, layout: layout
 end
 
-get '/start' do
-  "Start a new game"
+get '/game' do
+  # Validate user and see if they have current game
+
+  erb :'game/game', layout: layout, locals: {characters: Character.all}
+end
+
+post '/game/add' do
+  sanitize(params)
+  Character.new(params[:character_name], 1, params[:character_gender]).save
+  redirect '/game'
 end

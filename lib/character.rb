@@ -1,11 +1,15 @@
 class Character
-  attr_reader :name, :gender, :level
+  attr_reader :name
+  attr_reader :level
+  attr_reader :gender
+  attr_reader :id
 
-  def initialize(name, gender)
+  def initialize(name, level, gender)
     @name = name
     @gender = gender
-    @level = 1
-    save_char
+    @level = level
+
+    @id = exec("SELECT id FROM characters WHERE name = #{@name}")
   end
 
   # Attribute changes
@@ -42,30 +46,48 @@ class Character
     end
   end
 
-  def roll
-    rand(6) + 1
+  def save
+    exec_params("INSERT INTO characters (name, level, gender_id) VALUES ($1, $2, $3)",
+      [@name, @level, get_gender_id(@gender)])
+    true
+  end
+
+  class << self
+    
+    def all
+      # Get all characters from database
+      exec("
+        SELECT characters.name, characters.level, genders.gender 
+        FROM characters JOIN genders ON characters.gender_id = genders.id
+        ").each_with_object([]) do |hash, arr|
+            arr << Character.parse(hash)
+          end
+    end
+
+    def parse(hash)
+      Character.new(hash["name"], hash["level"], hash["gender"])
+    end
+
+    def roll
+      rand(6) + 1
+    end
+  end
+
+  def get_gender_id(gender)
+    exec_params("SELECT id FROM genders WHERE gender = $1", [gender]).first["id"]
   end
 
   private
 
-  def save_char
-    # Write char to database
-    true
-  end
-
-  def get_id
-    exec("SELECT id FROM characters WHERE ")
-  end
-
   def update_level
     # exec("UPDATE characters SET level = #{@level}
-    #   WHERE id = #{@id}")
+    #   WHERE game_id = ##### AND name = '#{@name}'")
     true
   end
 
   def update_sex
     # exec("UPDATE characters SET gender = '#{@gender}'
-    #   WHERE id = #{@id}")
+    #   WHERE game_id = ##### AND name = '#{@name}'")
     true
   end
 
