@@ -36,6 +36,8 @@ end
 get '/char/:id/up' do
   sanitize(params)
 
+  Character.from_id(params[:id]).level_up
+
   redirect '/game'
 end
 

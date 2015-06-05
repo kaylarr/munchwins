@@ -57,17 +57,26 @@ class Character
   class << self
     
     def all
-      # Get all characters from database
       exec("
         SELECT characters.name, characters.level, genders.gender 
         FROM characters JOIN genders ON characters.gender_id = genders.id
         ").each_with_object([]) do |hash, arr|
             arr << Character.parse(hash)
-          end
+          end.sort {|a, b| b.level <=> a.level}
+    end
+
+    def from_id(id)
+      Character.parse(
+        exec_params("
+        SELECT characters.name, characters.level, genders.gender 
+        FROM characters JOIN genders ON characters.gender_id = genders.id
+        WHERE characters.id = $1",
+        [id]).first
+      )
     end
 
     def parse(hash)
-      Character.new(hash["name"], hash["level"], hash["gender"])
+      Character.new(hash["name"], hash["level"].to_i, hash["gender"])
     end
 
     def delete(id)
@@ -87,8 +96,9 @@ class Character
   end
 
   def update_level
-    # exec("UPDATE characters SET level = #{@level}
-    #   WHERE game_id = ##### AND name = '#{@name}'")
+    exec_params("UPDATE characters SET level = $1
+      WHERE name = $2", # Add game_id when incorporated
+      [@level, @name])
     true
   end
 
