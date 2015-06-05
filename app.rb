@@ -1,9 +1,9 @@
 require 'sinatra'
 require 'pg'
 
-require_relative './lib/fx'
-require_relative './lib/character'
-require_relative './lib/game'
+require_relative './lib/database'
+require_relative './lib/models/character'
+require_relative './lib/models/game'
 
 
 layout = :'layouts/layout'
@@ -21,5 +21,11 @@ end
 post '/game/add' do
   sanitize(params)
   Character.new(params[:character_name], 1, params[:character_gender]).save
+  redirect '/game'
+end
+
+get '/game/delete/:id' do
+  sanitize(params)
+  Character.delete(params[:id])
   redirect '/game'
 end

@@ -26,5 +26,5 @@ def exec_params(sql, params)
 end
 
 def sanitize(params)
-  params.each {|k, v| params[k].gsub!(/<|>/, '')}
+  params.each {|k, v| params[k].gsub!(/<|>/, '') if v.class == String}
 end

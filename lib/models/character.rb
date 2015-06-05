@@ -74,12 +74,12 @@ class Character
       Character.new(hash["name"], hash["level"], hash["gender"])
     end
 
-    def delete(id)
-      exec_params("DELETE FROM characters WHERE id = $1", [id])
-    end
-
     def roll
       rand(6) + 1
+    end
+
+    def delete(id)
+      exec_params("DELETE FROM characters WHERE id = $1", [id])
     end
   end
 

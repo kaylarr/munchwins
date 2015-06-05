@@ -36,8 +36,14 @@ CREATE TABLE statuses (
   status varchar(15)
 );
 
+INSERT INTO game_states (state) VALUES ('setup');
+INSERT INTO game_states (state) VALUES ('playing');
+INSERT INTO game_states (state) VALUES ('combat');
+INSERT INTO game_states (state) VALUES ('finished');
+
 INSERT INTO genders (gender) VALUES ('male');
 INSERT INTO genders (gender) VALUES ('female');
+
 INSERT INTO statuses (status) VALUES ('sex-changed');
 INSERT INTO statuses (status) VALUES ('paranoid');
 

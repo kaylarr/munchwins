@@ -1,8 +1,8 @@
-require_relative '../../lib/character'
+require_relative '../../../lib/models/character'
 
 describe Character do
 
-  let (:char) {Character.new('Vin Cheesel', 'male')}
+  let (:char) {Character.new('Vin Cheesel', 1, 'male')}
   
   context 'LEVELING' do
 
