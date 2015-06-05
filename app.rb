@@ -32,3 +32,15 @@ get '/game/delete/:id' do
   Character.delete(params[:id])
   redirect '/game'
 end
+
+get '/char/:id/up' do
+  sanitize(params)
+
+  redirect '/game'
+end
+
+get '/char/:id/down' do
+  sanitize(params)
+
+  redirect '/game'
+end

@@ -54,10 +54,6 @@ class Character
     exec_params("SELECT id FROM characters WHERE name = $1", [@name]).first["id"]
   end
 
-  def get_gender_id
-    exec_params("SELECT id FROM genders WHERE gender = $1", [@gender]).first["id"]
-  end
-
   class << self
     
     def all
@@ -74,17 +70,21 @@ class Character
       Character.new(hash["name"], hash["level"], hash["gender"])
     end
 
-    def roll
-      rand(6) + 1
-    end
-
     def delete(id)
       exec_params("DELETE FROM characters WHERE id = $1", [id])
+    end
+
+    def roll
+      rand(6) + 1
     end
   end
 
 
   private
+
+  def get_gender_id
+    exec_params("SELECT id FROM genders WHERE gender = $1", [@gender]).first["id"]
+  end
 
   def update_level
     # exec("UPDATE characters SET level = #{@level}
