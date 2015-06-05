@@ -1,15 +1,24 @@
-DROP TABLE IF EXISTS users, characters, genders;
+DROP TABLE IF EXISTS games, users, characters, genders;
 
-CREATE TABLE users(
+CREATE TABLE games (
   id SERIAL PRIMARY KEY,
-  first_name VARCHAR(25),
-  login VARCHAR(255)
+  game_date DATE NOT NULL,
+  user_id INT NOT NULL,
+  logs TEXT
 );
 
-CREATE TABLE characters(
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(15),
-  gender_id INT
+  first_name VARCHAR(25) NOT NULL,
+  login VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE characters (
+  id SERIAL PRIMARY KEY,
+  game_id INT NOT NULL,
+  name VARCHAR(15) NOT NULL,
+  level INT NOT NULL,
+  gender_id INT NOT NULL
 );
 
 CREATE TABLE genders (
