@@ -14,6 +14,9 @@ end
 
 get '/game' do
   # Validate user and see if they have current game
+  # link to /game/:id
+  # sanitize(params)
+  # pull from game_id = params[:id]
 
   erb :'game/game', layout: layout, locals: {characters: Character.all}
 end

@@ -54,10 +54,6 @@ class Character
     exec_params("SELECT id FROM characters WHERE name = $1", [@name]).first["id"]
   end
 
-  def get_gender_id
-    exec_params("SELECT id FROM genders WHERE gender = $1", [@gender]).first["id"]
-  end
-
   class << self
     
     def all
@@ -85,6 +81,10 @@ class Character
 
 
   private
+
+  def get_gender_id
+    exec_params("SELECT id FROM genders WHERE gender = $1", [@gender]).first["id"]
+  end
 
   def update_level
     # exec("UPDATE characters SET level = #{@level}
