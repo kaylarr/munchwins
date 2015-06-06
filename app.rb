@@ -8,7 +8,13 @@ require_relative './lib/models/game'
 
 layout = :'layouts/layout'
 
+USER_ID = 1 # Get from session cookie..?
+
 get '/' do
+  # Show basic instructions with 'Vin Cheesel' sample card
+
+  # Link to start game, or resume game if user has one open
+
   erb :index, layout: layout
 end
 
@@ -20,6 +26,10 @@ get '/game' do
 
   erb :'game/game', layout: layout, locals: {characters: Character.all}
 end
+
+
+
+##### Set up a new game
 
 post '/game/add' do
   sanitize(params)
@@ -33,16 +43,34 @@ get '/game/delete/:id' do
   redirect '/game'
 end
 
+
+
+##### Start game and display character cards
+
+get '/game/play' do
+  # game_state = 'cards'
+end
+
 get '/char/:id/up' do
   sanitize(params)
-
   Character.from_id(params[:id]).level_up
-
   redirect '/game'
 end
 
 get '/char/:id/down' do
   sanitize(params)
-
+  Character.from_id(params[:id]).level_down
   redirect '/game'
 end
+
+
+
+##### Switch to combat helper
+
+# game_state = 'combat'
+
+
+
+##### Game finished
+
+# game_state = 'finished'

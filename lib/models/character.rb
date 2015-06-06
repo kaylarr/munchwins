@@ -4,11 +4,57 @@ class Character
   attr_reader :gender
   attr_reader :id
 
+  class << self
+    
+    def all
+      exec("
+        SELECT characters.name, characters.level, genders.gender 
+        FROM characters JOIN genders ON characters.gender_id = genders.id
+        ").each_with_object([]) do |hash, arr|
+            arr << Character.parse(hash)
+          end.sort {|a, b| b.level <=> a.level}
+    end
+
+    def from_id(id)
+      Character.parse(
+        exec_params("
+          SELECT characters.name, characters.level, genders.gender 
+          FROM characters JOIN genders ON characters.gender_id = genders.id
+          WHERE characters.id = $1", [id]
+          ).first
+      )
+    end
+
+    def parse(hash)
+      Character.new(hash["name"], hash["level"].to_i, hash["gender"])
+    end
+
+    def delete(id)
+      exec_params("DELETE FROM characters WHERE id = $1", [id])
+    end
+  end
+
+
+
+  ### INSTANCE METHODS
+
   def initialize(name, level, gender)
     @name = name
     @gender = gender
     @level = level
   end
+
+  def save
+    exec_params("INSERT INTO characters (name, level, gender_id) VALUES ($1, $2, $3)",
+      [@name, @level, get_gender_id])
+    true
+  end
+
+  def id
+    exec_params("SELECT id FROM characters WHERE name = $1", [@name]).first["id"]
+  end
+
+
 
   # Attribute changes
 
@@ -44,49 +90,6 @@ class Character
     end
   end
 
-  def save
-    exec_params("INSERT INTO characters (name, level, gender_id) VALUES ($1, $2, $3)",
-      [@name, @level, get_gender_id])
-    true
-  end
-
-  def id
-    exec_params("SELECT id FROM characters WHERE name = $1", [@name]).first["id"]
-  end
-
-  class << self
-    
-    def all
-      exec("
-        SELECT characters.name, characters.level, genders.gender 
-        FROM characters JOIN genders ON characters.gender_id = genders.id
-        ").each_with_object([]) do |hash, arr|
-            arr << Character.parse(hash)
-          end.sort {|a, b| b.level <=> a.level}
-    end
-
-    def from_id(id)
-      Character.parse(
-        exec_params("
-        SELECT characters.name, characters.level, genders.gender 
-        FROM characters JOIN genders ON characters.gender_id = genders.id
-        WHERE characters.id = $1",
-        [id]).first
-      )
-    end
-
-    def parse(hash)
-      Character.new(hash["name"], hash["level"].to_i, hash["gender"])
-    end
-
-    def delete(id)
-      exec_params("DELETE FROM characters WHERE id = $1", [id])
-    end
-
-    def roll
-      rand(6) + 1
-    end
-  end
 
 
   private
@@ -107,5 +110,4 @@ class Character
     #   WHERE game_id = ##### AND name = '#{@name}'")
     true
   end
-
 end

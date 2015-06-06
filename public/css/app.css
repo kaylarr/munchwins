@@ -18,6 +18,7 @@ main {
   top: 50px;
   bottom: 25px;
   width: 100%;
+  overflow: scroll;
 }
 
 footer {

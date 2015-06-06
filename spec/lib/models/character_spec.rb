@@ -57,14 +57,14 @@ describe Character do
 
   context 'PERFORMING ACTIONS' do
 
-    describe '::roll' do
-      it 'gives value >= 1' do
-        expect(Character.roll).to be >= 1
-      end
+    # describe '::roll' do
+    #   it 'gives value >= 1' do
+    #     expect(Character.roll).to be >= 1
+    #   end
 
-      it 'gives value <= 6' do
-        expect(Character.roll).to be <= 6
-      end
-    end
+    #   it 'gives value <= 6' do
+    #     expect(Character.roll).to be <= 6
+    #   end
+    # end
   end
 end
