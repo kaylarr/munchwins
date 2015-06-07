@@ -42,13 +42,19 @@ footer {
 
 /* Main */
 
-/* Character partial */
+/* Character display */
+
+.characters {
+  width: 90%;
+  margin: 0 auto;
+  background: red;
+}
 
 .character-card {
   border: 1px solid #ddd;
-  width: 300px;
+  background: green;
+  width: 100%;
   height: 50px;
-  margin: 10px;
 }
 
 

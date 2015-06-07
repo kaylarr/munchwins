@@ -1,5 +1,5 @@
 <h1>game setup</h1>
-<%= erb :'game/add', locals: {characters: characters} %>
+<%= erb :'game/add', locals: {characters: game.characters} %>
 
 <h1>gameplay</h1>
-<%= erb :'game/cards', locals: {characters: characters} %>
+<%= erb :'game/cards', locals: {characters: game.characters} %>

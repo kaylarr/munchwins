@@ -22,30 +22,46 @@ class Game
 
   ### INSTANCE METHODS
 
-  def initialize(state)
-    # @date = @date || Time.now.to_s.slice(0..9)
+  def initialize(state='start')
+    # @date = @date || Time.now.to_s.slice(0..9) --> don't init with date, save with date?
     @state = state
   end
 
-  def add_characters
-    nil
+  # Attributes
+
+  def id
+    # Get according to user and date?
   end
 
-  def character
+  # Character interaction
 
+  def characters
+    Character.all#(id)
   end
 
-  def logs
-
+  def save(character)
+    # Incorporate game.id
+    exec_params("INSERT INTO characters (name, level, gender_id) VALUES ($1, $2, $3)",
+      [character.name, character.level, character.gender_id])
+    true
   end
 
-  def timestamp
-    "(timestamp)"
+  def delete(character)
+    # Incorporate game.id
+    exec_params("DELETE FROM characters WHERE id = $1", [character.id])
   end
 
-  def log(action)
-    @log << "<#{timestamp}> #{action}\n"
-  end
+  # def logs
+
+  # end
+
+  # def timestamp
+  #   "(timestamp)"
+  # end
+
+  # def log(action)
+  #   @log << "<#{timestamp}> #{action}\n"
+  # end
 
   private
 

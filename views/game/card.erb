@@ -3,14 +3,14 @@
   <%= character.level %>
   <%= character.gender %>
 
-  <div class="level-up">
-    <a href="/char/<%= character.id %>/up">
+  <a href="/char/<%= character.id %>/up">
+    <div class="level-button level-up">
       up
-    </a>
-  </div>
-  <div class="level-down">
-    <a href="/char/<%= character.id %>/down">
+    </div>
+  </a>
+  <a href="/char/<%= character.id %>/down">
+    <div class="level-button level-down">
       down
-    </a>
-  </div>
+    </div>
+  </a>
 </div>

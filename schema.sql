@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS
 
 CREATE TABLE games (
   id SERIAL PRIMARY KEY,
-  game_date DATE NOT NULL,
+  --game_date DATE NOT NULL,
   state_id INT NOT NULL,
-  user_id INT,                  -- INCORPORATE NOT NULL
+  user_id INT, -- NOT NULL
   logs TEXT
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE users (
 
 CREATE TABLE characters (
   id SERIAL PRIMARY KEY,
-  game_id INT,                  -- INCORPORATE NOT NULL
+  game_id INT, -- NOT NULL
   name VARCHAR(50) NOT NULL,
   level INT NOT NULL,
   gender_id INT NOT NULL
@@ -37,10 +37,12 @@ CREATE TABLE genders (
   gender VARCHAR(6)
 );
 
-CREATE TABLE statuses (
-  id SERIAL PRIMARY KEY,
-  status varchar(50)
-);
+-- CREATE TABLE statuses (
+--   id SERIAL PRIMARY KEY,
+--   status varchar(50)
+-- );
+
+-- INITIAL TABLE SETUP
 
 INSERT INTO game_states (state) VALUES ('start');
 INSERT INTO game_states (state) VALUES ('cards');
@@ -50,10 +52,10 @@ INSERT INTO game_states (state) VALUES ('finished');
 INSERT INTO genders (gender) VALUES ('male');
 INSERT INTO genders (gender) VALUES ('female');
 
-INSERT INTO statuses (status) VALUES ('sex-changed');
-INSERT INTO statuses (status) VALUES ('paranoid');
+-- INSERT INTO statuses (status) VALUES ('sex-changed');
+-- INSERT INTO statuses (status) VALUES ('paranoid');
 
--- Temporary INSERTS for testing
+-- TEMPORARY TEST INSERTS
 
 INSERT INTO characters (game_id, name, level, gender_id)
 VALUES (1, 'Vin Cheesel', 1, 1);

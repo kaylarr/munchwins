@@ -6,7 +6,8 @@ class Character
 
   class << self
     
-    def all
+    def all#(game_id)
+      # Incorporate game_id
       exec("
         SELECT characters.name, characters.level, genders.gender 
         FROM characters JOIN genders ON characters.gender_id = genders.id
@@ -28,10 +29,6 @@ class Character
     def parse(hash)
       Character.new(hash["name"], hash["level"].to_i, hash["gender"])
     end
-
-    def delete(id)
-      exec_params("DELETE FROM characters WHERE id = $1", [id])
-    end
   end
 
 
@@ -42,12 +39,6 @@ class Character
     @name = name
     @gender = gender
     @level = level
-  end
-
-  def save
-    exec_params("INSERT INTO characters (name, level, gender_id) VALUES ($1, $2, $3)",
-      [@name, @level, get_gender_id])
-    true
   end
 
   def id
@@ -90,13 +81,13 @@ class Character
     end
   end
 
+  def gender_id
+    exec_params("SELECT id FROM genders WHERE gender = $1", [@gender]).first["id"]
+  end
+
 
 
   private
-
-  def get_gender_id
-    exec_params("SELECT id FROM genders WHERE gender = $1", [@gender]).first["id"]
-  end
 
   def update_level
     exec_params("UPDATE characters SET level = $1

@@ -8,7 +8,7 @@ require_relative './lib/models/game'
 
 layout = :'layouts/layout'
 
-USER_ID = 1 # Get from session cookie..?
+USER = 1 # Get from session cookie..?
 
 get '/' do
   # Show basic instructions with 'Vin Cheesel' sample card
@@ -24,7 +24,7 @@ get '/game' do
   # sanitize(params)
   # pull from game_id = params[:id]
 
-  erb :'game/game', layout: layout, locals: {characters: Character.all}
+  erb :'game/game', layout: layout, locals: {game: Game.from_id(USER)}
 end
 
 
@@ -33,13 +33,17 @@ end
 
 post '/game/add' do
   sanitize(params)
-  Character.new(params[:character_name], 1, params[:character_gender]).save
+
+  Game.from_id(USER).save( Character.new(params[:character_name], 1, params[:character_gender]) )
+
   redirect '/game'
 end
 
 get '/game/delete/:id' do
   sanitize(params)
-  Character.delete(params[:id])
+
+  Game.from_id(USER).delete( Character.from_id(params[:id]) )
+
   redirect '/game'
 end
 
