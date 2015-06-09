@@ -1,84 +1,64 @@
 DROP TABLE IF EXISTS
+  -- users,
   games,
-  users,
-  characters,
-  character_states,
-  genders,
-  statuses;
+  players,
+  genders;
+
+-- CREATE TABLE users (
+--   id SERIAL PRIMARY KEY,
+--   first_name VARCHAR(50) NOT NULL,
+--   login VARCHAR(255) UNIQUE NOT NULL
+-- );
 
 CREATE TABLE games (
   id SERIAL PRIMARY KEY,
   game_date DATE NOT NULL,
-  state_id INT NOT NULL,
-  user_id INT, -- NOT NULL
-  logs TEXT
+  game_state_id INT NOT NULL
+  -- user_id INT, -- NOT NULL,
+  -- logs TEXT
 );
 
 CREATE TABLE game_states (
   id SERIAL PRIMARY KEY,
-  state VARCHAR(50)
+  state VARCHAR(15)
 );
 
-CREATE TABLE users (
+CREATE TABLE players (
   id SERIAL PRIMARY KEY,
-  first_name VARCHAR(50) NOT NULL,
-  login VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE characters (
-  id SERIAL PRIMARY KEY,
-  game_id INT, -- NOT NULL
+  game_id INT NOT NULL,
   name VARCHAR(50) NOT NULL,
   level INT NOT NULL,
-  gender_id INT NOT NULL
-  -- character_state_id INT NOT NULL
+  gender_id INT NOT NULL,
+  in_combat BOOLEAN NOT NULL
 );
 
--- CREATE TABLE character_states (
---   id SERIAL PRIMARY KEY,
---   character_state VARCHAR(50)  
--- );
 
 CREATE TABLE genders (
   id SERIAL PRIMARY KEY,
   gender VARCHAR(6)
 );
 
--- CREATE TABLE statuses (
---   id SERIAL PRIMARY KEY,
---   status varchar(50)
--- );
-
 -- INITIAL TABLE SETUP
 
 INSERT INTO game_states (state) VALUES ('start');
-INSERT INTO game_states (state) VALUES ('cards');
+INSERT INTO game_states (state) VALUES ('scores');
 INSERT INTO game_states (state) VALUES ('combat');
 INSERT INTO game_states (state) VALUES ('finished');
-
--- INSERT INTO character_states (character_state) VALUES ('playing');
--- INSERT INTO character_states (character_state) VALUES ('fighting');
 
 INSERT INTO genders (gender) VALUES ('male');
 INSERT INTO genders (gender) VALUES ('female');
 
--- INSERT INTO statuses (status) VALUES ('sex-changed');
--- INSERT INTO statuses (status) VALUES ('paranoid');
-
 -- --------------------------------------------------------------
 -- TEMPORARY TEST INSERTS
 
-INSERT INTO characters (game_id, name, level, gender_id)
-VALUES (1, 'Vin Cheesel', 1, 1);
+INSERT INTO players (game_id, name, level, gender_id, in_combat)
+VALUES (1, 'Vin Cheesel', 1, 1, FALSE);
 
-INSERT INTO characters (game_id, name, level, gender_id)
-VALUES (1, 'Swindlerella', 1, 2);
+INSERT INTO players (game_id, name, level, gender_id, in_combat)
+VALUES (1, 'Swindlerella', 1, 2, FALSE);
 
-INSERT INTO characters (game_id, name, level, gender_id)
-VALUES (1, 'Gingebinge', 1, 1);
+INSERT INTO players (game_id, name, level, gender_id, in_combat)
+VALUES (1, 'Gingebinge', 1, 1, FALSE);
 
-INSERT INTO games (game_date, state_id, user_id)
-VALUES ('2015-06-06', 1, 1);
-
-INSERT INTO users (first_name, login)
-VALUES ('kevin', 'thisismylogin');
+INSERT INTO games (game_date, game_state_id)
+VALUES ('2015-06-06', 1);
