@@ -2,12 +2,13 @@ DROP TABLE IF EXISTS
   games,
   users,
   characters,
+  character_states,
   genders,
   statuses;
 
 CREATE TABLE games (
   id SERIAL PRIMARY KEY,
-  --game_date DATE NOT NULL,
+  game_date DATE NOT NULL,
   state_id INT NOT NULL,
   user_id INT, -- NOT NULL
   logs TEXT
@@ -30,7 +31,13 @@ CREATE TABLE characters (
   name VARCHAR(50) NOT NULL,
   level INT NOT NULL,
   gender_id INT NOT NULL
+  -- character_state_id INT NOT NULL
 );
+
+-- CREATE TABLE character_states (
+--   id SERIAL PRIMARY KEY,
+--   character_state VARCHAR(50)  
+-- );
 
 CREATE TABLE genders (
   id SERIAL PRIMARY KEY,
@@ -49,12 +56,16 @@ INSERT INTO game_states (state) VALUES ('cards');
 INSERT INTO game_states (state) VALUES ('combat');
 INSERT INTO game_states (state) VALUES ('finished');
 
+-- INSERT INTO character_states (character_state) VALUES ('playing');
+-- INSERT INTO character_states (character_state) VALUES ('fighting');
+
 INSERT INTO genders (gender) VALUES ('male');
 INSERT INTO genders (gender) VALUES ('female');
 
 -- INSERT INTO statuses (status) VALUES ('sex-changed');
 -- INSERT INTO statuses (status) VALUES ('paranoid');
 
+-- --------------------------------------------------------------
 -- TEMPORARY TEST INSERTS
 
 INSERT INTO characters (game_id, name, level, gender_id)

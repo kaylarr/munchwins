@@ -1,8 +1,5 @@
 class Character
-  attr_reader :name
-  attr_reader :level
-  attr_reader :gender
-  attr_reader :id
+  attr_reader :name, :level, :gender, :id
 
   class << self
     

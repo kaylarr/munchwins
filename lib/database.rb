@@ -1,3 +1,4 @@
+# database.rb
 # Database connection and utility
 
 def db

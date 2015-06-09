@@ -16,22 +16,35 @@ class Game
     end
 
     def parse(hash)
-      Game.new(hash["state"])
+      Game.new(hash["id"], hash["state"])
     end
   end
 
   ### INSTANCE METHODS
 
-  def initialize(state='start')
+  def initialize(id, state='start')
     # @date = @date || Time.now.to_s.slice(0..9) --> don't init with date, save with date?
+    @id = id
     @state = state
   end
 
   # Attributes
 
-  def id
-    # Get according to user and date?
+  def state
+    exec_params("
+      SELECT games.id, game_states.state
+      FROM games JOIN game_states ON games.state_id = game_states.id
+      WHERE games.id = $1", [@id]
+    ).first["state"]
   end
+
+  # def state=(state)
+  #   state_id = get_state_id(state)
+  #   exec_params("
+  #     UPDATE games SET state
+  #     ")
+  # end
+
 
   # Character interaction
 

@@ -8,13 +8,11 @@ require_relative './lib/models/game'
 
 layout = :'layouts/layout'
 
-USER = 1 # Get from session cookie..?
+USER = 1 # Get from session cookie eventually
 
 get '/' do
   # Show basic instructions with 'Vin Cheesel' sample card
-
   # Link to start game, or resume game if user has one open
-
   erb :index, layout: layout
 end
 
@@ -33,17 +31,14 @@ end
 
 post '/game/add' do
   sanitize(params)
-
-  Game.from_id(USER).save( Character.new(params[:character_name], 1, params[:character_gender]) )
-
+  character = Character.new(params[:character_name], 1, params[:character_gender])
+  Game.from_id(USER).save(character)
   redirect '/game'
 end
 
 get '/game/delete/:id' do
   sanitize(params)
-
   Game.from_id(USER).delete( Character.from_id(params[:id]) )
-
   redirect '/game'
 end
 
@@ -53,6 +48,7 @@ end
 
 get '/game/play' do
   # game_state = 'cards'
+  redirect '/game'
 end
 
 get '/char/:id/up' do
