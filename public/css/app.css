@@ -42,14 +42,14 @@ footer {
 
 /* Main */
 
-/* Character display */
+/* player display */
 
-.characters {
+.players {
   width: 90%;
   margin: 0 auto;
 }
 
-.character-card {
+.player-card {
   border: 1px solid #ddd;
   width: 100%;
   height: 50px;

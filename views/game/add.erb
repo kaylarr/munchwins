@@ -1,10 +1,10 @@
-<h1>Create characters</h1>
-<div class="character-add">
+<h1>add players</h1>
+<div class="player-add">
   <form action="/game/add" method="post">
     <fieldset>
-      <label for="character_name">Name</label>
-      <input type="text" name="character_name" placeholder="name" />
-      <select name="character_gender">
+      <label for="player[name]">Name</label>
+      <input type="text" name="player[name]" placeholder="name" />
+      <select name="player[gender]">
         <option value="male">male</option>
         <option value="female">female</option>
       </select>
@@ -12,11 +12,11 @@
     </fieldset>
   </form>
 </div>
-<div class="characters">
-  <% characters.each do |character| %>
+<div class="players">
+  <% players.each do |player| %>
     <h1>
-      <a href="/game/delete/<%= character.id %>">X</a>
-      <%= character.name %>
+      <a href="/game/delete/<%= player.id %>">X</a>
+      <%= player.name %>
     </h1>
   <% end %>
 </div>

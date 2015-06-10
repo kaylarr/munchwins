@@ -3,12 +3,12 @@ class Character
 
   class << self
     
-    def all#(game_id)
-      # Incorporate game_id
-      exec("
+    def all(id)
+      exec_params("
         SELECT characters.name, characters.level, genders.gender 
         FROM characters JOIN genders ON characters.gender_id = genders.id
-        ").each_with_object([]) do |hash, arr|
+        WHERE game_id = $1", [id]
+        ).each_with_object([]) do |hash, arr|
             arr << Character.parse(hash)
           end.sort {|a, b| b.level <=> a.level}
     end

@@ -1,82 +1,90 @@
 class Game
+  attr_reader :id, :state, :date
 
   class << self
-    def all(user)
-      # Get all games for user
+
+    def all(user_id)
+      exec_params("
+        SELECT games.id, games.game_date AS date, game_states.state
+        FROM games JOIN game_states ON games.game_state_id = game_states.id
+        WHERE user_id = $1", [user_id]
+        ).map {|hash| Game.new(user_id, hash)}
     end
 
-    def from_id(id)
-      Game.parse(
+    def from_id(user_id)
+      Game.new(
+        user_id,
         exec_params("
-          SELECT games.id, game_states.state
-          FROM games JOIN game_states ON games.state_id = game_states.id
-          WHERE games.id = $1", [id]
+          SELECT games.id, games.game_date AS date, game_states.state
+          FROM games JOIN game_states ON games.game_state_id = game_states.id
+          WHERE games.user_id = $1 AND game_state_id < 4", [user_id]
         ).first
       )
     end
 
-    def parse(hash)
-      Game.new(hash["id"], hash["state"])
+    def delete(player)
+      exec_params("DELETE FROM players WHERE id = $1", [player.id])
     end
+
   end
 
   ### INSTANCE METHODS
 
-  def initialize(id, state='start')
-    # @date = @date || Time.now.to_s.slice(0..9) --> don't init with date, save with date?
-    @id = id
-    @state = state
+  def initialize(user_id, params = {})
+    @user_id = user_id
+    @id =
+      if params["id"].nil?  # New game
+        write_game_and_return_id
+      else  # Existing game
+        params["id"]
+      end
+    @state = params.fetch("state", "start")
+    @date = params.fetch("date", current_day)
   end
 
-  # Attributes
-
-  def state
+  def write_game_and_return_id
     exec_params("
-      SELECT games.id, game_states.state
-      FROM games JOIN game_states ON games.state_id = game_states.id
-      WHERE games.id = $1", [@id]
-    ).first["state"]
+      INSERT INTO games (game_date, game_state_id, user_id) VALUES ($1, $2, $3)
+      RETURNING id", [current_day, 1, USER]
+      ).first["id"]
   end
 
-  # def state=(state)
-  #   state_id = get_state_id(state)
-  #   exec_params("
-  #     UPDATE games SET state
-  #     ")
-  # end
-
-
-  # Character interaction
-
-  def characters
-    Character.all#(id)
+  def state=(state)
+    @state = state
+    exec_params("UPDATE games SET game_state_id = $1 WHERE id = $2",
+      [state_id(state), @id])
   end
 
-  def save(character)
-    # Incorporate game.id
-    exec_params("INSERT INTO characters (name, level, gender_id) VALUES ($1, $2, $3)",
-      [character.name, character.level, character.gender_id])
-    true
+  # Player interaction
+
+  def players
+    Player.all(@id)
   end
 
-  def delete(character)
-    # Incorporate game.id
-    exec_params("DELETE FROM characters WHERE id = $1", [character.id])
+  def create(player)
+    exec_params("
+      INSERT INTO players (
+        name, level, gender_id, game_id, in_combat)
+      VALUES ($1, $2, $3, $4, FALSE)",
+      [player.name, player.level, player.gender_id, @id])
   end
 
-  # def logs
-
-  # end
-
-  # def timestamp
-  #   "(timestamp)"
-  # end
-
-  # def log(action)
-  #   @log << "<#{timestamp}> #{action}\n"
-  # end
 
   private
 
-  # What calls need to be private?
+  def current_day
+    Time.now.to_s.slice(0..9)
+  end
+
+  def state_id(state)
+    exec_params("SELECT id FROM game_states WHERE state = $1", [state]).first["id"]
+  end
+
+  # def state
+  #   exec_params("
+  #     SELECT games.id, game_states.state
+  #     FROM games JOIN game_states ON games.state_id = game_states.id
+  #     WHERE games.id = $1", [@id]
+  #   ).first["state"]
+  # en
 end

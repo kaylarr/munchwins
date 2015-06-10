@@ -7,4 +7,5 @@ gem 'pg'
 
 group :test, :development do
   gem 'rspec'
+  gem 'byebug'
 end
