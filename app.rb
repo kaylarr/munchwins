@@ -54,8 +54,7 @@ get '/game/scores' do
   redirect '/game'
 end
 
-
-
+# Game support routes
 
 get '/game/delete/:id' do
   sanitize(params)
@@ -63,8 +62,7 @@ get '/game/delete/:id' do
   redirect '/game'
 end
 
-# ##### Start game and display character cards
-
+# Character support routes
 
 get '/player/:id/up' do
   sanitize(params)
@@ -84,14 +82,3 @@ get '/player/:id/sexchange' do
   redirect '/game'
 end
 
-
-
-# ##### Switch to combat helper
-
-# # game_state = 'combat'
-
-
-
-# ##### Game finished
-
-# # game_state = 'finished'
