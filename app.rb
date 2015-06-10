@@ -8,9 +8,7 @@ require_relative './lib/models/player'
 layout = :'layouts/layout'
 
 USER = 1
-# Get from session cookie once OAuth set up
-# Used in:
-#  - Game#write_game_to_database
+# Get from session cookie once OAuth set up?
 
 
 get '/' do
@@ -20,17 +18,18 @@ get '/' do
   erb :index, layout: layout
 end
 
+# Incorporate '/game/:user_id' routes
 get '/game' do
   erb :'game/game', layout: layout, locals: {game: Game.from_id(USER)}
 end
 
 get '/game/new' do
-  # Will this be redundany when USER is more dynamic?
+  # Will this be redundant when USER is more dynamic?
   erb :'game/game', layout: layout, locals: {game: Game.new(USER)}
 end
 
 get '/game/add' do
-  # Return to player setup from current game
+  # Return to player setup
   game = Game.from_id(USER)
   game.state = 'start'
   redirect '/game'
@@ -43,10 +42,9 @@ post '/game/add' do
   redirect '/game'
 end
 
-get '/game/play' do
-  # Return to scores page from game setup
+get '/game/scores' do
+  # Return to scores page
   
-  # Validate user and see if they have current game
   # link to /game/:id
   # sanitize(params)
   # pull from game_id = params[:id]
@@ -68,17 +66,23 @@ end
 # ##### Start game and display character cards
 
 
-# get '/char/:id/up' do
-#   sanitize(params)
-#   Character.from_id(params[:id]).level_up
-#   redirect '/game'
-# end
+get '/player/:id/up' do
+  sanitize(params)
+  Player.from_id(params[:id]).level_up
+  redirect '/game'
+end
 
-# get '/char/:id/down' do
-#   sanitize(params)
-#   Character.from_id(params[:id]).level_down
-#   redirect '/game'
-# end
+get '/player/:id/down' do
+  sanitize(params)
+  Player.from_id(params[:id]).level_down
+  redirect '/game'
+end
+
+get '/player/:id/sexchange' do
+  sanitize(params)
+  Player.from_id(params[:id]).change_sex
+  redirect '/game'
+end
 
 
 

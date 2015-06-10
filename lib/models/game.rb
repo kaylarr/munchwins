@@ -45,7 +45,7 @@ class Game
   def write_game_and_return_id
     exec_params("
       INSERT INTO games (game_date, game_state_id, user_id) VALUES ($1, $2, $3)
-      RETURNING id", [current_day, 1, USER]
+      RETURNING id", [current_day, 1, @user_id]
       ).first["id"]
   end
 

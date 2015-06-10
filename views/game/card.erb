@@ -3,14 +3,22 @@
   <%= player.level %>
   <%= player.gender %>
 
-  <a href="/char/<%= player.id %>/up">
-    <div class="level-button level-up">
-      up
-    </div>
-  </a>
-  <a href="/char/<%= player.id %>/down">
-    <div class="level-button level-down">
-      down
-    </div>
-  </a>
+  <div class="level-buttons">
+    <a href="/player/<%= player.id %>/up">
+      <div class="level-button level-up">
+        up
+      </div>
+    </a>
+    <a href="/player/<%= player.id %>/down">
+      <div class="level-button level-down">
+        down
+      </div>
+    </a>
+  </div>
+
+  <div class="gender-button">
+    <a href="/player/<%= player.id %>/sexchange">
+      sex change
+    </a>
+  </div>
 </div>
