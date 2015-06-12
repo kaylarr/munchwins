@@ -5,3 +5,11 @@
     start (or resume) a game
   </a>
 </div>
+
+<% if session[:admin] %>
+  <h1>hi, <%= session[:username] %></h1>
+  <a href="/logout">log out</a>
+<% else %>
+  <h1>who the feck ah ya?</h1>
+  <a href="/login">login</a>
+<% end %>

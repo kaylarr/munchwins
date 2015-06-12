@@ -1,10 +1,7 @@
 require 'sinatra'
 require 'pg'
 
-require 'net/http'
-require 'net/https'
-require 'cgi'
-require 'json'
+require 'omniauth-facebook'
 
 require_relative './config/vars'
 
@@ -13,16 +10,41 @@ require_relative './lib/models/game'
 require_relative './lib/models/player'
 
 enable :sessions
+
+use OmniAuth::Builder do
+  provider :facebook, ENV["FB_ID"] || FB_ID, ENV["FB_SECRET"] || FB_SECRET
+end
+
 layout = :'layouts/layout'
 
 USER = 1
-# Get from session cookie once OAuth set up?
+
+# FACEBOOK authentication
+
+get '/login' do
+  redirect to('/auth/facebook')
+end
+
+get '/auth/facebook/callback' do
+  env['omniauth.auth'] ? session[:admin] = true : halt(401, 'Not Authorized')
+  session[:username] = env['omniauth.auth']['info']['name']
+  session[:uid] = env['omniauth.auth']['uid']
+  redirect '/'
+end
+
+get '/logout' do
+  session.clear
+  redirect '/'
+end
+
+get 'auth/failure' do
+  params[:message]
+end
 
 # Show basic instructions with 'Vin Cheesel' sample card?
 
 get '/' do
-  if session[:oauth][:access_token].nil?
-    erb :start
+
   erb :index, layout: layout
 end
 
