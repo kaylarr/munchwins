@@ -6,6 +6,8 @@ require 'net/https'
 require 'cgi'
 require 'json'
 
+require_relative './config/vars'
+
 require_relative './lib/database'
 require_relative './lib/models/game'
 require_relative './lib/models/player'
