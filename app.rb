@@ -1,20 +1,26 @@
 require 'sinatra'
 require 'pg'
 
+require 'net/http'
+require 'net/https'
+require 'cgi'
+require 'json'
+
 require_relative './lib/database'
 require_relative './lib/models/game'
 require_relative './lib/models/player'
 
+enable :sessions
 layout = :'layouts/layout'
 
 USER = 1
 # Get from session cookie once OAuth set up?
 
+# Show basic instructions with 'Vin Cheesel' sample card?
 
 get '/' do
-  # Show basic instructions with 'Vin Cheesel' sample card
-  # Link to start game, or resume game if user has one open
-  #  - Only allow one open game?
+  if session[:oauth][:access_token].nil?
+    erb :start
   erb :index, layout: layout
 end
 
