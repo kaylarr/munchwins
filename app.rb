@@ -20,12 +20,22 @@ layout = :'layouts/layout'
 USER = 1
 
 # FACEBOOK authentication
+# Use:
+#   env['omniauth.auth']['info']['name']
+#   env['omniauth.auth']['info']['image']
+#   env['omniauth.auth']['uid']
+#   "#{env['omniauth.auth']}"
+#   session[:username] = env['omniauth.auth']['info']['name']
+#   session[:uid] = env['omniauth.auth']['uid']
 
 get '/login' do
   redirect to('/auth/facebook')
 end
 
 get '/auth/facebook/callback' do
+  # Create new USER based off of uid,
+  # use user_id from table in sessions?
+
   env['omniauth.auth'] ? session[:admin] = true : halt(401, 'Not Authorized')
   session[:username] = env['omniauth.auth']['info']['name']
   session[:uid] = env['omniauth.auth']['uid']
