@@ -46,7 +46,8 @@ get '/auth/facebook/callback' do
 
   session[:username] = user.name
   session[:user_id] = user.id
-  
+  session[:pic] = env['omniauth.auth']['info']['image']
+
   redirect '/'
 end
 
@@ -87,7 +88,7 @@ get '/game' do
 
   session[:game_id] = game.id
 
-  erb :'game/game', locals: {game: game}
+  erb :'game/game', layout: :'layouts/game', locals: {game: game}
 end
 
 # Add player screen

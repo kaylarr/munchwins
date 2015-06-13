@@ -1,13 +1,11 @@
 <!-- if game state is 'start' -->
 <% if game.state == 'start' %>
-  <h1>game setup</h1>
   <%= erb :'game/add', locals: {players: game.players} %>
 <% end %>
 
 
 <!-- if game state is 'scores' -->
 <% if game.state == 'scores' %>
-  <h1>gameplay</h1>
   <%=  erb :'game/scores', locals: {players: game.players} %>
 <% end %>
 

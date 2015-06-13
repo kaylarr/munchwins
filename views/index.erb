@@ -1,12 +1,19 @@
-<h1>munchwins</h1>
+<div class="buffer"></div>
+
+<h1 id="login-title">munch<span id="login-w">w</span>ins</h1>
 
 <% if session[:user] %>
-  <h1>hi, <%= session[:username] %></h1>
-  <a href="/logout">log out</a>
-  <a href="/game">play!</a>
+  <h1>well hello, <%= session[:username] %></h1>
+  <form action="/logout" method="get" class="card-buttons">
+    <input type="submit" value="logout" id="logout-button" />
+  </form>
+  <form action="/game" method="get" class="card-buttons">
+    <input type="submit" value="play" id="play-button" />
+  </form>
 
 <% else %>
-  <h1>who the feck ah ya?</h1>
-  <a href="/login">login</a>
+  <form action="/login" method="get">
+    <input type="submit" value="login" id="login-button" />
+  </form>
 
 <% end %>
