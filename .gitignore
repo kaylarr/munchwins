@@ -1,3 +1,4 @@
 # Local config vars
-vars.rb
-user.sql
+var.rb
+*.env
+.env

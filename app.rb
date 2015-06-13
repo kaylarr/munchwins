@@ -5,8 +5,6 @@ require 'pg'
 
 require 'omniauth-facebook'
 
-require_relative './config/vars'
-
 require_relative './lib/database'
 require_relative './lib/models/game'
 require_relative './lib/models/user'
