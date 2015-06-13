@@ -1,14 +1,14 @@
 DROP TABLE IF EXISTS
-  -- users,
+  users,
   games,
   players,
   genders;
 
--- CREATE TABLE users (
---   id SERIAL PRIMARY KEY,
---   first_name VARCHAR(50) NOT NULL,
---   login VARCHAR(255) UNIQUE NOT NULL
--- );
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  uid VARCHAR(255) UNIQUE NOT NULL,
+  name VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE games (
   id SERIAL PRIMARY KEY,
@@ -47,6 +47,8 @@ INSERT INTO game_states (state) VALUES ('finished');
 
 INSERT INTO genders (gender) VALUES ('male');
 INSERT INTO genders (gender) VALUES ('female');
+
+INSERT INTO users (uid, name) VALUES ('10155635834720573', 'kvlr');
 
 -- --------------------------------------------------------------
 -- TEMPORARY TEST INSERTS

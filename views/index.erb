@@ -1,15 +1,12 @@
-<h2>index</h2>
+<h1>munchwins</h1>
 
-<div class="start">
-  <a href="/game">
-    start (or resume) a game
-  </a>
-</div>
-
-<% if session[:admin] %>
+<% if session[:user] %>
   <h1>hi, <%= session[:username] %></h1>
   <a href="/logout">log out</a>
+  <a href="/game">play!</a>
+
 <% else %>
   <h1>who the feck ah ya?</h1>
   <a href="/login">login</a>
+
 <% end %>

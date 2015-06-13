@@ -3,6 +3,18 @@ class Player
   attr_reader :name, :level, :gender, :id
 
   class << self
+
+    def create(name, gender, game_id)
+      gender_id = gender == 'male' ? 1 : 2
+
+      id = exec_params("
+        INSERT INTO players (name, gender_id, game_id, level, in_combat)
+        VALUES ($1, $2, $3, 1, FALSE) RETURNING id",
+        [name, gender_id, game_id]
+      ).first["id"]
+
+      Player.from_id(id)
+    end
     
     def all(game_id)
       exec_params("
@@ -22,6 +34,10 @@ class Player
           WHERE players.id = $1", [player_id]
           ).first
       )
+    end
+
+    def delete(id)
+      exec_params("DELETE FROM players WHERE id = $1", [id])
     end
 
   end # class << self
@@ -84,11 +100,11 @@ class Player
   def update_sex
     # Incorporate error handling - true if update, else false
     exec_params("UPDATE players SET gender_id = $1 WHERE id = $2",
-      [gender_id(@gender), @id])
+      [get_gender_id(@gender), @id])
     true
   end
 
-  def gender_id(gender)
+  def get_gender_id(gender)
     exec_params("SELECT id FROM genders WHERE gender = $1", [gender]).first["id"]
   end
 end

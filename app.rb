@@ -1,3 +1,5 @@
+# Show basic instructions with 'Vin Cheesel' sample card?
+
 require 'sinatra'
 require 'pg'
 
@@ -7,6 +9,7 @@ require_relative './config/vars'
 
 require_relative './lib/database'
 require_relative './lib/models/game'
+require_relative './lib/models/user'
 require_relative './lib/models/player'
 
 enable :sessions
@@ -15,10 +18,8 @@ use OmniAuth::Builder do
   provider :facebook, ENV["FB_ID"] || FB_ID, ENV["FB_SECRET"] || FB_SECRET
 end
 
-layout = :'layouts/layout'
 
-USER = 1
-
+##########
 # FACEBOOK authentication
 
 get '/login' do
@@ -26,9 +27,19 @@ get '/login' do
 end
 
 get '/auth/facebook/callback' do
-  env['omniauth.auth'] ? session[:admin] = true : halt(401, 'Not Authorized')
-  session[:username] = env['omniauth.auth']['info']['name']
-  session[:uid] = env['omniauth.auth']['uid']
+  env['omniauth.auth'] ? session[:user] = true : halt(401, 'Not Authorized')
+
+  uid = env['omniauth.auth']['uid']
+
+  user = 
+    if User.exist?(uid)
+      User.from_uid(uid)
+    else
+      User.create(uid, env['omniauth.auth']['info']['name'])
+    end
+
+  session[:username] = user.name
+  session[:user_id] = user.id
   redirect '/'
 end
 
@@ -41,58 +52,68 @@ get 'auth/failure' do
   params[:message]
 end
 
-# Show basic instructions with 'Vin Cheesel' sample card?
+get '/test' do
+  erb :test
+end
+
+
+##########
+# Index
 
 get '/' do
-
-  erb :index, layout: layout
+  erb :index
 end
 
-# Incorporate '/game/:user_id' routes
+
+##########
+# Game routes
+
+# Game screen - load open game or create new game
+
 get '/game' do
-  erb :'game/game', layout: layout, locals: {game: Game.from_id(USER)}
+  game = 
+    if User.open_game?(session[:user_id])
+      Game.from_userid(session[:user_id])
+    else
+      Game.new(session[:user_id])
+    end
+
+  session[:game_id] = game.id
+
+  erb :'game/game', locals: {game: game}
 end
 
-get '/game/new' do
-  # Will this be redundant when USER is more dynamic?
-  erb :'game/game', layout: layout, locals: {game: Game.new(USER)}
-end
+# Add player screen
 
 get '/game/add' do
   # Return to player setup
-  game = Game.from_id(USER)
+  game = Game.from_userid(session[:user_id])
   game.state = 'start'
   redirect '/game'
 end
 
 post '/game/add' do
   sanitize(params)
-  player = Player.new(params[:player])
-  Game.from_id(USER).create(player)
+  name = params['player']['name']
+  gender = params['player']['gender']
+  Player.create(name, gender, session[:game_id])
   redirect '/game'
 end
-
-get '/game/scores' do
-  # Return to scores page
-  
-  # link to /game/:id
-  # sanitize(params)
-  # pull from game_id = params[:id]
-
-  game = Game.from_id(USER)
-  game.state = 'scores'
-  redirect '/game'
-end
-
-# Game support routes
 
 get '/game/delete/:id' do
   sanitize(params)
-  Game.delete( Player.from_id(params[:id]) )
+  Player.delete(params[:id])
   redirect '/game'
 end
 
-# Character support routes
+# Game scores and player behavior
+
+get '/game/scores' do
+  # Return to scores page
+  game = Game.from_userid(session[:user_id])
+  game.state = 'scores'
+  redirect '/game'
+end
 
 get '/player/:id/up' do
   sanitize(params)
@@ -111,4 +132,3 @@ get '/player/:id/sexchange' do
   Player.from_id(params[:id]).change_sex
   redirect '/game'
 end
-

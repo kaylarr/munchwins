@@ -1,4 +1,4 @@
-<!-- if game state is 'setup' -->
+<!-- if game state is 'start' -->
 <% if game.state == 'start' %>
   <h1>game setup</h1>
   <%= erb :'game/add', locals: {players: game.players} %>
@@ -17,13 +17,13 @@
 <!-- if game state is 'finished' -->
 
 
-<!-- generic test output -->
+<!-- test output -->
 
 <h1>REWRITE TEST</h1>
 <%= game.id %>
 <%= game.state %>
 
 <h1>all games for user</h1>
-<% Game.all(USER).each do |game| %>
+<% Game.all(session[:user_id]).each do |game| %>
   <p><%= game.id %>: <%= game.date %> - <%= game.state %></p>
 <%  end %>
