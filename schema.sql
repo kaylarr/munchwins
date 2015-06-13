@@ -51,17 +51,17 @@ INSERT INTO genders (gender) VALUES ('female');
 -- --------------------------------------------------------------
 -- TEMPORARY TEST INSERTS
 
-INSERT INTO players (game_id, name, level, gender_id, in_combat)
-VALUES (1, 'Vin Cheesel', 1, 1, FALSE);
+-- INSERT INTO players (game_id, name, level, gender_id, in_combat)
+-- VALUES (1, 'Vin Cheesel', 1, 1, FALSE);
 
-INSERT INTO players (game_id, name, level, gender_id, in_combat)
-VALUES (1, 'Swindlerella', 1, 2, FALSE);
+-- INSERT INTO players (game_id, name, level, gender_id, in_combat)
+-- VALUES (1, 'Swindlerella', 1, 2, FALSE);
 
-INSERT INTO players (game_id, name, level, gender_id, in_combat)
-VALUES (1, 'Gingebinge', 1, 1, FALSE);
+-- INSERT INTO players (game_id, name, level, gender_id, in_combat)
+-- VALUES (1, 'Gingebinge', 1, 1, FALSE);
 
-INSERT INTO games (game_date, user_id, game_state_id)
-VALUES ('2015-06-06', 1, 4);
+-- INSERT INTO games (game_date, user_id, game_state_id)
+-- VALUES ('2015-06-06', 1, 4);
 
-INSERT INTO games (game_date, user_id, game_state_id)
-VALUES ('2015-06-08', 1, 1);
+-- INSERT INTO games (game_date, user_id, game_state_id)
+-- VALUES ('2015-06-08', 1, 1);
