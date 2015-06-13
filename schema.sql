@@ -48,8 +48,6 @@ INSERT INTO game_states (state) VALUES ('finished');
 INSERT INTO genders (gender) VALUES ('male');
 INSERT INTO genders (gender) VALUES ('female');
 
-INSERT INTO users (uid, name) VALUES ('10155635834720573', 'kvlr');
-
 -- --------------------------------------------------------------
 -- TEMPORARY TEST INSERTS
 
