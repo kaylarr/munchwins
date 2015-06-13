@@ -15,15 +15,3 @@
 <!-- if game state is 'combat' -->
 
 <!-- if game state is 'finished' -->
-
-
-<!-- test output -->
-
-<h1>REWRITE TEST</h1>
-<%= game.id %>
-<%= game.state %>
-
-<h1>all games for user</h1>
-<% Game.all(session[:user_id]).each do |game| %>
-  <p><%= game.id %>: <%= game.date %> - <%= game.state %></p>
-<%  end %>

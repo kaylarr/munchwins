@@ -3,6 +3,7 @@
 body {
   color: #999;
   text-align: center;
+  background: no-repeat top center/100% fixed url('/assets/munchwin.jpg');
 }
 
 header {
