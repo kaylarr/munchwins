@@ -11,7 +11,7 @@ class Game
         ).map {|hash| Game.new(user_id, hash)}
     end
 
-    def from_id(user_id)
+    def from_userid(user_id)
       Game.new(
         user_id,
         exec_params("
@@ -60,15 +60,6 @@ class Game
   def players
     Player.all(@id)
   end
-
-  def create(player)
-    exec_params("
-      INSERT INTO players (
-        name, level, gender_id, game_id, in_combat)
-      VALUES ($1, $2, $3, $4, FALSE)",
-      [player.name, player.level, player.gender_id, @id])
-  end
-
 
   private
 
