@@ -1,1 +1,0 @@
-INSERT INTO users (uid, name) VALUES ('10155635834720573', 'kvlr');

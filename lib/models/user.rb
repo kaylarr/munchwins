@@ -7,8 +7,8 @@ class User
 
     def create(uid, name)
       User.new({
-        id: exec_params("INSERT INTO users (uid, name) VALUES ($1, $2) RETURNING id", [uid, name]),
-        name: name
+        "id" => exec_params("INSERT INTO users (uid, name) VALUES ($1, $2) RETURNING id", [uid, name]).first["id"],
+        "name" => name
         })
     end
 

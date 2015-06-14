@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS
   users,
   games,
+  game_states,
   players,
   genders;
 
