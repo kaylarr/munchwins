@@ -2,7 +2,7 @@
 # Database connection and utility
 
 def db
-  connection_settings = { dbname: ENV["DATABASE_NAME"] || DB_NAME }
+  connection_settings = { dbname: ENV["DATABASE_NAME"] || 'munchwins' }
   connection_settings[:host] = ENV["DATABASE_HOST"] if ENV["DATABASE_HOST"]
   connection_settings[:user] = ENV["DATABASE_USER"] if ENV["DATABASE_USER"]
   connection_settings[:password] = ENV["DATABASE_PASS"] if ENV["DATABASE_PASS"]

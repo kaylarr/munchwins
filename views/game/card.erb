@@ -1,24 +1,40 @@
 <div class="player-card">
-  <div class="player-name"><%= player.name %></div>
-  <div class="player-level"><%= player.level %></div>
-  <%= player.gender %>
-
-  <div class="level-buttons">
-    <a href="/player/<%= player.id %>/up">
-      <div class="level-button level-up">
-        up
-      </div>
-    </a>
-    <a href="/player/<%= player.id %>/down">
-      <div class="level-button level-down">
-        down
-      </div>
-    </a>
+  <div class="player-header">
+    <span class="player-name"><%= player.name %></span>
+    <span class="player-gender float-right"><%= player.gender %></span>
   </div>
 
-  <div class="gender-button">
-    <a href="/player/<%= player.id %>/sexchange">
-      sex change
-    </a>
+  <div class="player-level">
+    <%= player.level %>
+  </div>
+
+  <div class="buttons level-buttons inline">
+    <span class="button-header">Level Actions</span>
+
+    <form action="/player/<%= player.id %>/up" method="get" class="inline">
+      <input type="submit" value="&uarr;" class="level-button" id="level-up" />
+    </form>
+
+    <form action="/player/<%= player.id %>/down" method="get" class="inline">
+      <input type="submit" value="&darr;" class="level-button" id="level-down" />
+    </form>
+  </div>
+
+  <div class="buttons status-buttons inline">
+    <span class="button-header">Disasters</span>
+
+    <form action="/player/<%= player.id %>/sexchange" method="get" class="inline">
+      <input type="submit" value="&#9893;" class="status-button" />
+    </form>
+
+<!--     <form action="" method="get" class="inline">
+    <input type="submit" value="" class="status-button" />
+    </form> -->
+  </div>
+
+  <div class="buttons combat-buttons inline">
+    <form action="#" class="inline">
+      <input type="submit" value="FIGHT!" class="combat-button" />
+    </form>
   </div>
 </div>

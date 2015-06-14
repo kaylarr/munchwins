@@ -22,7 +22,7 @@ body {
   color: #aaa;
   font-family: helvetica, verdana, sans-serif;
   text-align: center;
-  background: no-repeat top center/100% fixed url('/assets/munchwin.jpg') #000;
+  background: no-repeat center top/100% fixed url('/assets/munchwin.jpg') #000;
 }
 
 a, a:visited {
@@ -31,8 +31,8 @@ a, a:visited {
 }
 
 a:hover {
-  color: #ff772d;
-  text-decoration: underline;
+  background: #ff772d;
+  color: #fff;
 }
 
 header {
@@ -81,12 +81,11 @@ footer {
   display: inline-block;
 }
 
-
-/* Header */
-
-header h1 {
+.button-header {
 
 }
+
+/* Header */
 
 .header-logout {
   background: rgba(0, 0, 0, .5);
@@ -106,6 +105,7 @@ header h1 {
 .header-logout:hover {
   height: 75px;
 }
+
 
 /* Main */
 
@@ -181,44 +181,110 @@ header h1 {
 /* player display */
 
 .players {
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
 }
 
 .player-card {
+  background: rgba(255, 255, 255, .25);
   border: 1px solid #ddd;
   width: 100%;
-  padding: 10px;
+  height: 125px;
   margin-bottom: 25px;
   text-align: left;
 }
 
+.player-header {
+  background: rgba(0, 0, 0, .5);
+  border-bottom: 1px solid #999;
+  color: #fff;
+  height: 25px;
+  width: 100%;
+}
+
 .player-name {
-  font-size: 200%;
+  font-size: 150%;
+  font-weight: 900;
+  font-family: georgia, serif;
+}
+
+.player-gender {
+  margin-top: 5px;
+  margin-right: 5px;
 }
 
 .player-level {
   display: inline-block;
-  border: 1px solid #999;
-  background: #ccc;
-  color: #000;
-  font-size: 400%;
-  padding: 10px 20px;
+  border-right: 1px solid #999;
+  height: 99px;
+  width: 100px;
+  background: rgba(0, 0, 0, .5);
+  color: #fff;
+  font-size: 500%;
+  font-family: georgia, serif;
+  text-align: center;
+  line-height: 75px;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.buttons input[type='submit'] {
+  font-size: 150%;
+  color: #fff;
+}
+
+.button-header {
+  display: block;
+  color: #fff;
 }
 
 .level-buttons {
+  width: 25%;
+}
 
+.status-buttons {
+  width: 25%;
+}
+
+.combat-buttons {
+  width: 25%;
 }
 
 .level-button {
-
+  background: rgba(80, 190, 10, .5);
+  height: 50px;
+  width: 50px;
 }
 
-.level-up {
-
+.level-button:hover {
+  background: rgba(80, 190, 10, .75);
 }
 
-.level-down {
-  
+.level-up {}
+
+.level-down {}
+
+.status-button {
+  height: 50px;
+  width: 50px;
+  background: rgba(255, 200, 20, .5);
 }
+
+.status-button:hover {
+  background: rgba(255, 200, 20, .75)
+}
+
+.combat-button {
+  background: rgba(250, 60, 0, .5);
+  height: 50px;
+  width: 100px;
+}
+
+.combat-button:hover {
+  background: rgba(250, 60, 0, .75);
+}
+
+
 /* Footer */

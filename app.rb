@@ -23,9 +23,7 @@ end
 #   env['omniauth.auth']['info']['name']
 #   env['omniauth.auth']['info']['image']
 #   env['omniauth.auth']['uid']
-#   "#{env['omniauth.auth']}"
-#   session[:username] = env['omniauth.auth']['info']['name']
-#   session[:uid] = env['omniauth.auth']['uid']
+
 
 get '/login' do
   redirect to('/auth/facebook')
