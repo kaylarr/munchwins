@@ -1,5 +1,3 @@
-# Show basic instructions with 'Vin Cheesel' sample card?
-
 require 'sinatra'
 require 'pg'
 
@@ -10,14 +8,16 @@ require_relative './lib/models/game'
 require_relative './lib/models/user'
 require_relative './lib/models/player'
 
-enable :sessions
+use Rack::Session::Cookie, {
+  secret: ENV["SECRET"],
+  expire_after:  43300
+}
 
 use OmniAuth::Builder do
-  provider :facebook, ENV["FB_ID"] || FB_ID, ENV["FB_SECRET"] || FB_SECRET
+  provider :facebook, ENV["FB_ID"], ENV["FB_SECRET"]
 end
 
 
-##########
 # FACEBOOK authentication
 # Use:
 #   env['omniauth.auth']['info']['name']
@@ -33,7 +33,7 @@ get '/auth/facebook/callback' do
   env['omniauth.auth'] ? session[:user] = true : halt(401, 'Not Authorized')
   uid = env['omniauth.auth']['uid']
 
-  user = 
+  user =
     if User.exist?(uid)
       User.from_uid(uid)
     else
@@ -56,26 +56,12 @@ get 'auth/failure' do
   params[:message]
 end
 
-get '/test' do
-  erb :test
-end
-
-
-##########
-# Index
-
 get '/' do
   erb :index
 end
 
-
-##########
-# Game routes
-
-# Game screen - load open game or create new game
-
 get '/game' do
-  game = 
+  game =
     if User.open_game?(session[:user_id])
       Game.from_userid(session[:user_id])
     else
